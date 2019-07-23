@@ -1,0 +1,24 @@
+# edges[] has already been defined to the edge list as before
+# n already set to 22, the number of vertices
+# deg[i] already set to the degree of vertex i
+
+A = np.array(np.zeros((n,n)))
+
+deg = np.array(np.zeros(n,dtype=int))
+for edge in edges:
+  deg[edge[0]] = deg[edge[0]] + 1
+  deg[edge[1]] = deg[edge[1]] + 1
+
+for edge in edges:
+  A[edge[0],edge[1]] = -1 / deg[edge[0]]
+  
+for idx in range(n):
+  A[idx, idx] = 1
+  
+print(A)
+
+# Insert code here to fill
+# the nxn matrix A with
+# the Laplacian matrix for
+# the graph represented by
+# the edge-list in array edges
