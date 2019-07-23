@@ -1,0 +1,52 @@
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> rect {fill: lightblue; stroke: black; }</style>
+<body>
+<svg width=300 height=300>
+</svg>
+<script>
+var data = [4,8,15,16,23,42];
+
+
+
+var width = 200;
+var height = 200;
+var margin = 50;
+
+xdomain = [0,3];
+xrange = [0,100];
+ydomain = [0,42];
+yrange = [200,0];
+hdomain = [0,42];
+hrange = [0,200];
+
+xs = d3.scaleLinear().domain(xdomain).range(xrange);
+ys = d3.scaleLinear().domain(ydomain).range(yrange);
+hs = d3.scaleLinear().domain(hdomain).range(hrange);
+
+var x = d3.scaleBand().domain([0,1,2,3,4,5]).range([0, width]);
+var y = d3.scaleLinear().domain([0,42]).range([height, 0]);
+
+d3.select("svg")
+ .attr("width", width + 2*margin)
+ .attr("height", height+ 2*margin)
+ .append("g")
+  .attr("transform","translate("+margin+","+margin+")")
+ .selectAll()
+ .data(data)
+ .enter()
+ .append("rect")
+   .attr("x", function(d,i) {return xs(i);})
+   .attr("y", function(d,i) {return ys(d);})
+   .attr('width',100/3)
+   .attr("height",function(d,i) {return hs(d);})
+;
+
+d3.select("svg")
+ .append("g")
+ .attr("transform", "translate("+margin+","+margin+")")
+ .call(d3.axisLeft(y));
+
+d3.select("svg").append("g")
+ .attr("transform", "translate("+margin+","+(height+margin)+")")
+ .call(d3.axisBottom(x));
